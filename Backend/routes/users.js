@@ -1,9 +1,11 @@
 var express = require('express');
+const usermodel = require('../model/userSchema');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/add_user', function(req, res, next) {
+    var data = usermodel.create(req.body);
+    res.json(data)
 });
 
 module.exports = router;
