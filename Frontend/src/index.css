@@ -19,3 +19,8 @@
   outline: none;
   cursor: pointer;
 }
+
+.user_name{
+  color: white;
+  font-weight: 500;
+}

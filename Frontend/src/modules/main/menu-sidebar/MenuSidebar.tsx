@@ -26,18 +26,18 @@ export const MENU: IMenuItem[] = [
     path: '/blank'
   },
   {
-    name: i18n.t('menusidebar.label.mainMenu'),
-    icon: 'far fa-caret-square-down nav-icon',
+    name: i18n.t('Student Zone'),
+    icon: 'fas fa-user-graduate nav-icon',
     children: [
       {
-        name: i18n.t('menusidebar.label.subMenu'),
-        icon: 'fas fa-hammer nav-icon',
+        name: i18n.t('Add Students'),
+        icon: 'fas fa-plus nav-icon',
         path: '/sub-menu-1'
       },
 
       {
-        name: i18n.t('menusidebar.label.blank'),
-        icon: 'fas fa-cogs nav-icon',
+        name: i18n.t('View Students'),
+        icon: 'fas fa-eye nav-icon',
         path: '/sub-menu-2'
       }
     ]
@@ -88,15 +88,12 @@ const MenuSidebar = () => {
             />
           </div>
           <div className="info">
-            <Link to="/profile" className="d-block">
-              {user.email}
-            </Link>
+            <div className="d-block">
+              <span className='user_name'>{sessionStorage.getItem("user_name")}</span>
+            </div>
           </div>
         </div>
 
-        <div className="form-inline">
-          <SidebarSearch />
-        </div>
 
         <nav className="mt-2" style={{overflowY: 'hidden'}}>
           <ul

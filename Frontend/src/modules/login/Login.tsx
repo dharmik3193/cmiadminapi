@@ -1,24 +1,44 @@
-import React, {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import {toast} from 'react-toastify';
-import {useFormik} from 'formik';
-import {useTranslation} from 'react-i18next';
-import {setWindowClass} from '@app/utils/helpers';
-import {PfButton, PfCheckbox} from '@profabric/react-components';
+import React, { useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { setWindowClass } from '@app/utils/helpers';
+import { PfButton, PfCheckbox } from '@profabric/react-components';
 import * as Yup from 'yup';
-import {Form, InputGroup} from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
+import axios from 'axios';
 
 const Login = () => {
   const [isAuthLoading, setAuthLoading] = useState(false);
- 
+
   const [t] = useTranslation();
+  const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    
+    axios.post('http://localhost:8000/login', {
+      email: email,
+      password: password
+    })
+      .then(function (res) {
+        console.log(res);
+        if(res.data.isloggedin)
+        {
+          toast.success("Login Successfull")
+          navigate('/');
+          sessionStorage.setItem("user_name",res.data.user_name)
+          sessionStorage.setItem("isLoggedin",true)
+        }else{
+          toast.error("Please Enter Valid Credentials")
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
 
-  const {handleChange, values, handleSubmit, touched, errors} = useFormik({
+  const { handleChange, values, handleSubmit, touched, errors } = useFormik({
     initialValues: {
       email: '',
       password: ''
@@ -32,8 +52,8 @@ const Login = () => {
     }),
     onSubmit: (values) => {
       login(values.email, values.password);
-      console.log(values.email,values.password);
-      
+      console.log(values.email, values.password);
+
     }
   });
 
@@ -114,7 +134,7 @@ const Login = () => {
                   block
                   type="submit"
                   loading={isAuthLoading}
-                  // disabled={isFacebookAuthLoading || isGoogleAuthLoading}
+                // disabled={isFacebookAuthLoading || isGoogleAuthLoading}
                 >
                   {t<string>('login.button.signIn.label')}
                 </PfButton>
