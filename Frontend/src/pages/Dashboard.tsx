@@ -1,8 +1,24 @@
 import {SmallBox} from '@app/components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {ContentHeader} from '@components';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    
+    var isLoggedin = sessionStorage.getItem('isLoggedin')
+
+    if(!isLoggedin)
+    {
+        navigate('/login')
+    }
+    
+
+  }, [])
+  
+
   return (
     <div>
       <ContentHeader title="Dashboard" />

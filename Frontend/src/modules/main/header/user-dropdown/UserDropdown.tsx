@@ -112,6 +112,7 @@ const UserDropdown = () => {
   const logOut = (event: any) => {
     event.preventDefault();
     setDropdownOpen(false);
+    sessionStorage.clear();
     dispatch(logoutUser());
     navigate('/login');
   };

@@ -5,7 +5,7 @@ var courseSchema = new mongoose.Schema({
         type:String
      },
      course_content:{
-        type:String
+        type:Array
      },
      course_duration:{
         type:String
