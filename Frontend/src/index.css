@@ -9,7 +9,7 @@
 @import '~react-toastify/dist/ReactToastify.min.css';
 
 #root {
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
 }
 
@@ -23,4 +23,8 @@
 .user_name{
   color: white;
   font-weight: 500;
+}
+
+.emirow{
+  width: 10px;
 }

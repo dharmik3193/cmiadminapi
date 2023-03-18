@@ -2,41 +2,120 @@
 import React, { useEffect, useState } from 'react';
 import { ContentHeader } from '@components';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const SubMenu = () => {
 
-  const [course,setCourse] = useState();
+  const [courses, setCourses] = useState();
+  const [registrationNo, setRegistrationNo] = useState('');
+  const [studentName, setStudentName] = useState('');
+  const [course, setCourse] = useState('');
+  const [dob, setDob] = useState('');
+  const [qualification, setQualification] = useState('');
+  const [mobile1, setMobile1] = useState('');
+  const [mobile2, setMobile2] = useState('');
+  const [address, setAddress] = useState('');
+  const [batch_time, setBatch_time] = useState('');
+  const [join_date, setJoin_date] = useState('');
+  const [end_date, setEnd_date] = useState('');
+  const [laptop, setLaptop] = useState(false);
+  const [job, setJob] = useState(false);
+  const [reference, setReference] = useState('');
+  const [fees, setFees] = useState(0);
+  const [tempfees, setTempfees] = useState(0);
+  const [emi, setEmi] = useState(0);
+  const [emidate, setEmidate] = useState('');
+  const [emidata, setemidata] = useState([])
 
   useEffect(() => {
-  
+
     axios.get('http://localhost:8000/course')
-    .then(function (response) {
-      // handle success
-      console.log(response);
-      setCourse(response.data)
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        setCourses(response.data)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
 
   }, [])
-  
-  const getSinglecourse = (id) => {
-    axios.get(`http://localhost:8000/course/${id}`)
-    .then(function (response) {
-      // handle success
-      console.log(response);
-      setCourse(response.data)
+
+  const add_data = (e) => {
+    e.preventDefault();
+
+    console.log(registrationNo);
+    console.log(studentName);
+    console.log(course);
+    console.log(dob);
+    console.log(qualification);
+    console.log(mobile1, mobile2, address, batch_time, join_date, end_date, laptop, job, reference, fees);
+    console.log(emidata);
+
+    axios.post('http://localhost:8000/add_student', {
+        r_no:registrationNo,
+        student_name:studentName,
+        course:course,
+        dob:dob,
+        qualification:qualification,
+        mobile1:mobile1,
+        mobile2:mobile2,
+        address:address,
+        batch:batch_time,
+        start_date:join_date,
+        end_date:end_date,
+        laptop:laptop,
+        job:job,
+        reference:reference,
+        fees:fees,
+        emi:emidata
     })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
   }
 
-  if(course)
-  {
+  const add_emi = (e) => {
+    e.preventDefault();
+    let emiobj = {
+      amount: emi,
+      emidate: emidate
+    }
+    if (tempfees > 0 && emi <= tempfees) {
+      emidata.push(emiobj)
+      setTempfees(tempfees - emi)
+    } else {
+      toast.error("Please Enter Valid EMI")
+    }
+    console.log(emidata);
+
+  }
+
+  const setfees = (fee) => {
+    setFees(fee);
+    setTempfees(fee);
+  }
+
+  const tableRows = emidata.map((item, index) => (
+    <>
+      <tr key={index} className='emirow'>
+        <td>{index + 1}</td>
+        <td>{item.amount}</td>
+        <td>{item.emidate}</td>
+      </tr>
+    </>
+  ));
+
+  const halfLength = Math.ceil(emidata.length / 2);
+  const firstHalf = tableRows.slice(0, halfLength);
+  const secondHalf = tableRows.slice(halfLength);
+
+  if (courses) {
     return (
       <div>
         <ContentHeader title="Add Students" />
@@ -54,6 +133,7 @@ const SubMenu = () => {
                       type="text"
                       className="form-control"
                       id="Reg_no"
+                      onChange={(e) => { setRegistrationNo(e.target.value) }}
                       placeholder="Enter Registration Number"
                     />
                   </div>
@@ -63,16 +143,17 @@ const SubMenu = () => {
                       type="text"
                       className="form-control"
                       id="student_name"
+                      onChange={(e) => { setStudentName(e.target.value) }}
                       placeholder="Enter Student Name"
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="Student Name">Select Course</label>
-                    <select name="course" id="course" className='form-control'>
-                      <option value="" disabled selected onChange={()=>{getSinglecourse(e.target.value)}}>Select Course</option>
+                    <select name="course" id="course" onChange={(e) => { setCourse(e.target.value) }} className='form-control'>
+                      <option value="" disabled selected>Select Course</option>
                       {
-                        course.map((item)=>{
-                          return(
+                        courses.map((item) => {
+                          return (
                             <option value={item._id}>{item.course_name}</option>
                           )
                         })
@@ -85,7 +166,7 @@ const SubMenu = () => {
                       type="date"
                       className="form-control"
                       id="date_of_birth"
-                      onChange={(e)=>{console.log(e.target.value)}}
+                      onChange={(e) => { setDob(e.target.value) }}
                     />
                   </div>
                   <div className="form-group">
@@ -95,6 +176,7 @@ const SubMenu = () => {
                       className="form-control"
                       id="qualification"
                       placeholder="Enter Qualification"
+                      onChange={(e) => { setQualification(e.target.value) }}
                     />
                   </div>
                   <div className="form-group">
@@ -104,6 +186,7 @@ const SubMenu = () => {
                       className="form-control"
                       id="contactnumber1"
                       placeholder="Enter Contact Number"
+                      onChange={(e) => { setMobile1(e.target.value) }}
                     />
                   </div>
                   <div className="form-group">
@@ -113,6 +196,7 @@ const SubMenu = () => {
                       className="form-control"
                       id="contactnumber2"
                       placeholder="Enter Contact Number"
+                      onChange={(e) => { setMobile2(e.target.value) }}
                     />
                   </div>
                   <div className="form-group">
@@ -121,12 +205,13 @@ const SubMenu = () => {
                       type="text"
                       className="form-control"
                       id="address"
+                      onChange={(e) => { setAddress(e.target.value) }}
                       placeholder="Enter Address"
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="BatchTime">Select Time</label>
-                    <select name="batchtime" id="batchtime" className='form-control'>
+                    <select name="batchtime" id="batchtime" onChange={(e) => { setBatch_time(e.target.value) }} className='form-control'>
                       <option value="" disabled selected>Select Batch</option>
                       <option value="8 to 10">8 to 10</option>
                       <option value="10 to 12">10 to 12</option>
@@ -143,7 +228,7 @@ const SubMenu = () => {
                       type="date"
                       className="form-control"
                       id="joining_date"
-                      onChange={(e)=>{console.log(e.target.value)}}
+                      onChange={(e) => { setJoin_date(e.target.value) }}
                     />
                   </div>
                   <div className="form-group">
@@ -152,12 +237,12 @@ const SubMenu = () => {
                       type="date"
                       className="form-control"
                       id="ending_date"
-                      onChange={(e)=>{console.log(e.target.value)}}
+                      onChange={(e) => { setEnd_date(e.target.value) }}
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="laptop">Laptop Compulsory</label>
-                    <select name="laptop" id="laptop" className='form-control'>
+                    <select name="laptop" id="laptop" onChange={(e) => { setLaptop(e.target.value) }} className='form-control'>
                       <option value="" disabled selected>Laptop Compulsory</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
@@ -165,7 +250,7 @@ const SubMenu = () => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="job">Job Responsibility</label>
-                    <select name="job" id="job" className='form-control'>
+                    <select name="job" id="job" onChange={(e) => { setJob(e.target.value) }} className='form-control'>
                       <option value="" disabled selected>Job Responsibility</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
@@ -177,6 +262,7 @@ const SubMenu = () => {
                       type="text"
                       className="form-control"
                       id="reference"
+                      onChange={(e) => { setReference(e.target.value) }}
                       placeholder="Enter Reference"
                     />
                   </div>
@@ -186,19 +272,100 @@ const SubMenu = () => {
                       type="text"
                       className="form-control"
                       id="fees"
+                      onChange={(e) => { setfees(e.target.value) }}
                       placeholder="Enter Fees"
                     />
                   </div>
-  
+                  <div className='row'>
+                    <div className="form-group col-xl-3 col-sm-4">
+                      <label htmlFor="fees">EMI Amount</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="fees"
+                        onChange={(e) => { setEmi(e.target.value) }}
+                        placeholder="Enter Amount"
+                      />
+                    </div>
+                    <div className="form-group col-xl-3 col-sm-4">
+                      <label htmlFor="fees">EMI Date</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        id="fees"
+                        onChange={(e) => { setEmidate(e.target.value) }}
+                        placeholder="Enter Date"
+                      />
+                    </div>
+                    <div className="form-group col-xl-3 col-sm-4">
+                      <label htmlFor="fees">Remaining Amount</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="fees"
+                        disabled
+                        value={tempfees}
+                        placeholder="Enter Date"
+                      />
+                    </div>
+
+                    <div className="form-group col-xl-3 col-sm-4">
+                      <label htmlFor="fees"></label>
+                      <div className="my-2">
+                        <button type="submit" onClick={(e) => { add_emi(e) }} className="btn btn-primary">
+                          Add EMI
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <table border={2} width={'100%'} cellSpacing={0} style={{ textAlign: "center" }}>
+                      <thead>
+                        <tr>
+                          <th>No.</th>
+                          <th>Amount</th>
+                          <th>Date</th>
+                          <th>No.</th>
+                          <th>Amount</th>
+                          <th>Date</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {emidata.map((emi, index) => {
+                          if (index % 2 === 0) {
+                            return (
+                              <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{emi.amount}</td>
+                                <td>{emi.emidate}</td>
+                                {emidata[index + 1] ? (
+                                  <>
+                                    <td>{index + 2}</td>
+                                    <td>{emidata[index + 1].amount}</td>
+                                    <td>{emidata[index + 1].emidate}</td>
+                                  </>
+                                ) : (
+                                  <td colSpan="3"></td>
+                                )}
+                              </tr>
+                            );
+                          }
+                        })}
+                      </tbody>
+
+                    </table>
+                  </div>
+
                 </div>
                 <div className="card-footer">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" onClick={(e) => { add_data(e) }} className="btn btn-primary">
                     Submit
                   </button>
                 </div>
               </form>
             </div>
-  
+
           </div>
         </section>
       </div>

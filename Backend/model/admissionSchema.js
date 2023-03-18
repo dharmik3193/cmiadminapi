@@ -10,7 +10,10 @@ var admissionSchema = new mongoose.Schema({
      course:{
           type:String
      },
-     course_content:{
+     dob:{
+          type:String
+     },
+     qualification:{
           type:String
      },
      mobile1:{
@@ -19,14 +22,32 @@ var admissionSchema = new mongoose.Schema({
      mobile2:{
           type:String
      },
+     address:{
+          type:String
+     },
+     batch:{
+          type:String
+     },
      start_date:{
           type:String
      },
      end_date:{
           type:String
      },
-     duration:{
+     laptop:{
           type:String
+     },
+     job:{
+          type:String
+     },
+     reference:{
+          type:String
+     },
+     fess:{
+          type:String
+     },
+     emi:{
+          type:Array
      }
 })
 
