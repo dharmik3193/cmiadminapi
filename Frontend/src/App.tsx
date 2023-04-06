@@ -10,12 +10,11 @@ import { useWindowSize } from '@app/hooks/useWindowSize';
 import { calculateWindowSize } from '@app/utils/helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWindowSize } from '@app/store/reducers/ui';
-
 import Dashboard from '@pages/Dashboard';
 import Blank from '@pages/Blank';
 import SubMenu from '@pages/SubMenu';
 import Profile from '@pages/profile/Profile';
-
+import UsePrintForm from './hooks/usePrintForm';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 
@@ -43,6 +42,7 @@ const App = () => {
           <Route path="/sub-menu-1" element={<SubMenu />} />
           <Route path="/blank" element={<Blank />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/print" element={<UsePrintForm />} />
           <Route path="/" element={<Dashboard />} />
         </Route>
       </Routes>

@@ -25,6 +25,38 @@
   font-weight: 500;
 }
 
-.emirow{
-  width: 10px;
+.page{
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  /* line-height: 50px; */
+  font-size: large;
+}
+
+.img_form{
+  width: 300px;
+}
+
+.passport{
+  width: 138px;
+  height: 177px;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.emi td{
+  border: 1px solid black;
+}
+
+.modal-dialog{
+  max-width: 834px !important;
+}
+
+.printbutton{
+  font-size: 8px;
+  border: none;
+  background-color: #fff;
 }

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { ContentHeader } from '@components';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Button, Modal } from 'react-bootstrap';
+import Studentform from '../print/Studentform';
 
 const SubMenu = () => {
 
@@ -26,6 +28,16 @@ const SubMenu = () => {
   const [emi, setEmi] = useState(0);
   const [emidate, setEmidate] = useState('');
   const [emidata, setemidata] = useState([])
+  const [show, setShow] = useState(false);
+  const [student_id, setstudent_id] = useState();
+
+
+  const handleClose = () => {
+    console.log("close");
+    
+    setShow(false)
+  };
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
 
@@ -42,41 +54,41 @@ const SubMenu = () => {
 
   }, [])
 
+
   const add_data = (e) => {
     e.preventDefault();
 
-    console.log(registrationNo);
-    console.log(studentName);
-    console.log(course);
-    console.log(dob);
-    console.log(qualification);
-    console.log(mobile1, mobile2, address, batch_time, join_date, end_date, laptop, job, reference, fees);
-    console.log(emidata);
-
-    axios.post('http://localhost:8000/add_student', {
-        r_no:registrationNo,
-        student_name:studentName,
-        course:course,
-        dob:dob,
-        qualification:qualification,
-        mobile1:mobile1,
-        mobile2:mobile2,
-        address:address,
-        batch:batch_time,
-        start_date:join_date,
-        end_date:end_date,
-        laptop:laptop,
-        job:job,
-        reference:reference,
-        fees:fees,
-        emi:emidata
-    })
-      .then((response) => {
-        console.log(response.data);
+    if (emi!=[] && tempfees==0) {
+      axios.post('http://localhost:8000/add_student', {
+        r_no: registrationNo,
+        student_name: studentName,
+        course: course,
+        dob: dob,
+        qualification: qualification,
+        mobile1: mobile1,
+        mobile2: mobile2,
+        address: address,
+        batch: batch_time,
+        start_date: join_date,
+        end_date: end_date,
+        laptop: laptop,
+        job: job,
+        reference: reference,
+        fees: fees,
+        emi: emidata
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          // console.log(response.data);
+          // student_id =  response.data._id;
+          setstudent_id(response.data._id)
+          handleShow();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }else{
+      alert("Please Fill Up Form Correctly")
+    }
 
   }
 
@@ -101,23 +113,34 @@ const SubMenu = () => {
     setTempfees(fee);
   }
 
-  const tableRows = emidata.map((item, index) => (
-    <>
-      <tr key={index} className='emirow'>
-        <td>{index + 1}</td>
-        <td>{item.amount}</td>
-        <td>{item.emidate}</td>
-      </tr>
-    </>
-  ));
-
-  const halfLength = Math.ceil(emidata.length / 2);
-  const firstHalf = tableRows.slice(0, halfLength);
-  const secondHalf = tableRows.slice(halfLength);
 
   if (courses) {
     return (
       <div>
+
+        {/* ========================= Model Start ============================== */}
+
+        <Modal
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Student Form</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {console.log(student_id)}
+            <Studentform id={student_id}/>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            {/* <Button variant="primary" onClick={()=>{Print()}}>Understood</Button> */}
+          </Modal.Footer>
+        </Modal>
+
         <ContentHeader title="Add Students" />
         <section className="content">
           <div className="container-fluid">
