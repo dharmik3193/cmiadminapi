@@ -43,7 +43,7 @@ var admissionSchema = new mongoose.Schema({
      reference:{
           type:String
      },
-     fess:{
+     fees:{
           type:String
      },
      emi:{

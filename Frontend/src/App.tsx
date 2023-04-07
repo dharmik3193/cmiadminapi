@@ -17,6 +17,7 @@ import Profile from '@pages/profile/Profile';
 import UsePrintForm from './hooks/usePrintForm';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
+import Addinquiry from './pages/Addinquiry';
 
 const App = () => {
   const windowSize = useWindowSize();
@@ -43,6 +44,9 @@ const App = () => {
           <Route path="/blank" element={<Blank />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/print" element={<UsePrintForm />} />
+          <Route path='/inquiry'>
+            <Route path='add-inquiry' element={<Addinquiry/>} />
+          </Route>
           <Route path="/" element={<Dashboard />} />
         </Route>
       </Routes>

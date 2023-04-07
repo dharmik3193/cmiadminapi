@@ -34,7 +34,7 @@ const SubMenu = () => {
 
   const handleClose = () => {
     console.log("close");
-    
+
     setShow(false)
   };
   const handleShow = () => setShow(true);
@@ -58,7 +58,7 @@ const SubMenu = () => {
   const add_data = (e) => {
     e.preventDefault();
 
-    if (emi!=[] && tempfees==0) {
+    if (emi != [] && tempfees == 0) {
       axios.post('http://localhost:8000/add_student', {
         r_no: registrationNo,
         student_name: studentName,
@@ -86,7 +86,7 @@ const SubMenu = () => {
         .catch((error) => {
           console.log(error);
         });
-    }else{
+    } else {
       alert("Please Fill Up Form Correctly")
     }
 
@@ -120,7 +120,7 @@ const SubMenu = () => {
 
         {/* ========================= Model Start ============================== */}
 
-        <Modal
+        {/* <Modal
           show={show}
           onHide={handleClose}
           backdrop="static"
@@ -137,8 +137,23 @@ const SubMenu = () => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            {/* <Button variant="primary" onClick={()=>{Print()}}>Understood</Button> */}
+            <Button variant="primary" onClick={()=>{Print()}}>Understood</Button>
           </Modal.Footer>
+        </Modal> */}
+        <Modal
+          show={show}
+          onHide={() => setShow(false)}
+          dialogClassName="modal-90w"
+          aria-labelledby="example-custom-modal-styling-title"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="example-custom-modal-styling-title">
+              Custom Modal Styling
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Studentform id={student_id}/>
+          </Modal.Body>
         </Modal>
 
         <ContentHeader title="Add Students" />

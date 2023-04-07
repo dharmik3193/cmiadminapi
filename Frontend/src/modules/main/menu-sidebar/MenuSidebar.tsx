@@ -41,6 +41,23 @@ export const MENU: IMenuItem[] = [
         path: '/sub-menu-2'
       }
     ]
+  },
+  {
+    name: i18n.t('Inquiry Data'),
+    icon: 'fas fa-file-alt nav-icon',
+    children: [
+      {
+        name: i18n.t('Add Inquiry'),
+        icon: 'fas fa-plus nav-icon',
+        path: '/inquiry/add-inquiry'
+      },
+
+      {
+        name: i18n.t('View Inquiry'),
+        icon: 'fas fa-eye nav-icon',
+        path: '/inquiry/view-inquiry'
+      }
+    ]
   }
 ];
 

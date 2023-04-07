@@ -35,7 +35,7 @@ const Studentform = (props) => {
         window.print();
         document.body.innerHTML = originalContents;
 
-        navigate('/');
+        // navigate('/');
     }
 
 
