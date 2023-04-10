@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react';
 import { ContentHeader } from '@components';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Blank = () => {
 
@@ -29,35 +31,6 @@ const Blank = () => {
         <ContentHeader title="Student Data" />
         <section className="content">
           <div className="container-fluid">
-            {/* <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">Title</h3>
-              <div className="card-tools">
-                <button
-                  type="button"
-                  className="btn btn-tool"
-                  data-widget="collapse"
-                  data-toggle="tooltip"
-                  title="Collapse"
-                >
-                  <i className="fa fa-minus" />
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-tool"
-                  data-widget="remove"
-                  data-toggle="tooltip"
-                  title="Remove"
-                >
-                  <i className="fa fa-times" />
-                </button>
-              </div>
-            </div>
-            <div className="card-body">
-              Start creating your amazing application!
-            </div>
-            <div className="card-footer">Footer</div>
-          </div> */}
             <table cellPadding={10} cellSpacing={0} border={2} width={'100%'} style={cell}>
               <thead>
                 <tr>
@@ -69,6 +42,7 @@ const Blank = () => {
                   <th>Laptop</th>
                   <th>Fees</th>
                   <th>Reference</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,6 +58,7 @@ const Blank = () => {
                         <td>{item.laptop}</td>
                         <td>{item.fees}</td>
                         <td>{item.reference}</td>
+                        <td><Link to={`/student/${item._id}`}><Button variant="primary"><i className='fas fa-eye nav-icon'/></Button></Link></td>
                       </tr>
                     )
                   })

@@ -18,6 +18,8 @@ import UsePrintForm from './hooks/usePrintForm';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import Addinquiry from './pages/Addinquiry';
+import Singlestudent from './pages/Singlestudent';
+import Viewinquiry from './pages/Viewinquiry';
 
 const App = () => {
   const windowSize = useWindowSize();
@@ -41,11 +43,13 @@ const App = () => {
         <Route path="/" element={<Main />}>
           <Route path="/sub-menu-2" element={<Blank />} />
           <Route path="/sub-menu-1" element={<SubMenu />} />
+          <Route path='/student/:id' element={<Singlestudent/>}/>
           <Route path="/blank" element={<Blank />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/print" element={<UsePrintForm />} />
           <Route path='/inquiry'>
             <Route path='add-inquiry' element={<Addinquiry/>} />
+            <Route path='view-inquiry' element={<Viewinquiry/>} />
           </Route>
           <Route path="/" element={<Dashboard />} />
         </Route>

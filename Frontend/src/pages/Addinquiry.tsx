@@ -1,6 +1,8 @@
 import { ContentHeader } from "@app/components"
 import axios from "axios";
 import { useState } from "react";
+import { toast } from 'react-toastify';
+
 
 const Addinquiry = () => {
 
@@ -19,34 +21,37 @@ const Addinquiry = () => {
 
     const add_inquiry = (e) => {
         e.preventDefault();
-        console.log(name, education, address, mobile1, mobile2, course, reference, inquiry, status, fees, note);
-    //     axios.post('http://localhost:8000/add_student', {
-    //     // r_no: registrationNo,
-    //     // student_name: studentName,
-    //     // course: course,
-    //     // dob: dob,
-    //     // qualification: qualification,
-    //     // mobile1: mobile1,
-    //     // mobile2: mobile2,
-    //     // address: address,
-    //     // batch: batch_time,
-    //     // start_date: join_date,
-    //     // end_date: end_date,
-    //     // laptop: laptop,
-    //     // job: job,
-    //     // reference: reference,
-    //     // fees: fees,
-    //     // emi: emidata
-    //   })
-        // .then((response) => {
-          // console.log(response.data);
-          // student_id =  response.data._id;
-        //   setstudent_id(response.data._id)
-        //   handleShow();
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        // });
+        // console.log(name, education, address, mobile1, mobile2, course, reference, inquiry, status, fees, note);
+        axios.post('http://localhost:8000/add_inquiry', {
+        name: name,
+        education:education,
+        address: address,
+        mobile1: mobile1,
+        mobile2: mobile2,
+        course: course,
+        reference: reference,
+        inquiry: inquiry,
+        status:status,
+        fees: fees,
+        note:note
+      })
+        .then((response) => {
+          console.log(response.data);
+          toast.success("Inquiry Added Successfully")
+          setName('');
+          setEducation('');
+          setAddress('');
+          setMobile1('');
+          setMobile2('');
+          setCourse('');
+          setReference('');
+          setInquiry('');
+          setFees('');
+          setNote('');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
     }
 
@@ -68,6 +73,7 @@ const Addinquiry = () => {
                                         onChange={(e) => { setName(e.target.value) }}
                                         className="form-control"
                                         id="student_name"
+                                        value={name}
                                         placeholder="Enter Student Name"
                                     />
                                 </div>
@@ -77,6 +83,7 @@ const Addinquiry = () => {
                                         type="text"
                                         onChange={(e) => { setEducation(e.target.value) }}
                                         className="form-control"
+                                        value={education}
                                         id="qualification"
                                         placeholder="Enter Education"
                                     />
@@ -85,6 +92,7 @@ const Addinquiry = () => {
                                     <label htmlFor="address">Address</label>
                                     <input
                                         type="text"
+                                        value={address}
                                         onChange={(e) => { setAddress(e.target.value) }}
                                         className="form-control"
                                         id="address"
@@ -97,6 +105,7 @@ const Addinquiry = () => {
                                         type="text"
                                         onChange={(e) => { setMobile1(e.target.value) }}
                                         className="form-control"
+                                        value={mobile1}
                                         id="contactnumber1"
                                         placeholder="Enter Contact Number"
                                     />
@@ -107,6 +116,7 @@ const Addinquiry = () => {
                                         type="text"
                                         onChange={(e) => { setMobile2(e.target.value) }}
                                         className="form-control"
+                                        value={mobile2}
                                         id="contactnumber2"
                                         placeholder="Enter Contact Number"
                                     />
@@ -117,6 +127,7 @@ const Addinquiry = () => {
                                         type="text"
                                         onChange={(e) => { setCourse(e.target.value) }}
                                         className="form-control"
+                                        value={course}
                                         id="course"
                                         placeholder="Enter Address"
                                     />
@@ -127,13 +138,14 @@ const Addinquiry = () => {
                                         type="text"
                                         onChange={(e) => { setReference(e.target.value) }}
                                         className="form-control"
+                                        value={reference}
                                         id="reference"
                                         placeholder="Enter Reference"
                                     />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="status">Inquiry By</label>
-                                    <select name="inquiry_by" id="inquiry_by" onChange={(e) => { setInquiry(e.target.value) }} className='form-control'>
+                                    <select name="inquiry_by" id="inquiry_by" value={inquiry} onChange={(e) => { setInquiry(e.target.value) }} className='form-control'>
                                         <option value="" disabled selected>Select Faculty</option>
                                         <option value="abhi">Abhishek Sir</option>
                                         <option value="dharmik">Dharmik Sir</option>
@@ -150,6 +162,7 @@ const Addinquiry = () => {
                                         type="text"
                                         onChange={(e) => { setFees(e.target.value) }}
                                         className="form-control"
+                                        value={fees}
                                         id="fees"
                                         placeholder="Enter Fees"
                                     />
@@ -160,6 +173,7 @@ const Addinquiry = () => {
                                         type="text"
                                         onChange={(e) => { setNote(e.target.value) }}
                                         className="form-control"
+                                        value={note}
                                         id="note"
                                         placeholder="Enter Extra Note"
                                     />

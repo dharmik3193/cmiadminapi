@@ -21,11 +21,6 @@ export const MENU: IMenuItem[] = [
     path: '/'
   },
   {
-    name: i18n.t('menusidebar.label.blank'),
-    icon: 'fas fa-wrench nav-icon',
-    path: '/blank'
-  },
-  {
     name: i18n.t('Student Zone'),
     icon: 'fas fa-user-graduate nav-icon',
     children: [
@@ -90,7 +85,7 @@ const MenuSidebar = () => {
           height={33}
           rounded
         />
-        <span className="brand-text font-weight-light">AdminLTE 3</span>
+        <span className="brand-text font-weight-light">Codesign Multimedia</span>
       </Link>
       <div className="sidebar">
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">

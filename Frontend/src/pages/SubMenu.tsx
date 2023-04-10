@@ -58,7 +58,7 @@ const SubMenu = () => {
   const add_data = (e) => {
     e.preventDefault();
 
-    if (emi != [] && tempfees == 0) {
+    if (emi !== [] && tempfees == 0) {
       axios.post('http://localhost:8000/add_student', {
         r_no: registrationNo,
         student_name: studentName,
@@ -192,7 +192,7 @@ const SubMenu = () => {
                       {
                         courses.map((item) => {
                           return (
-                            <option value={item._id}>{item.course_name}</option>
+                            <option value={item.course_name}>{item.course_name}</option>
                           )
                         })
                       }

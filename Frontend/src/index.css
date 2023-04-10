@@ -47,7 +47,8 @@
   margin: 10px;
 }
 
-.emi td{
+.emi thead,
+.emi tbody{
   border: 1px solid black;
 }
 
@@ -59,4 +60,11 @@
   font-size: 8px;
   border: none;
   background-color: #fff;
+}
+
+.nav-sidebar .nav-link p{
+  margin: 10px;
+}
+.nav-sidebar.nav-child-indent .nav-treeview {
+  padding-left: 1rem !important;
 }

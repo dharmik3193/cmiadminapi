@@ -1,23 +1,49 @@
-import {SmallBox} from '@app/components';
-import React, { useEffect } from 'react';
-import {ContentHeader} from '@components';
+import { SmallBox } from '@app/components';
+import React, { useEffect, useState } from 'react';
+import { ContentHeader } from '@components';
 import { useNavigate } from 'react-router-dom';
+import { Icon } from '@iconify/react';
+import axios from 'axios';
 
 const Dashboard = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    
+
     var isLoggedin = sessionStorage.getItem('isLoggedin')
 
-    if(!isLoggedin)
-    {
-        navigate('/login')
+    if (!isLoggedin) {
+      navigate('/login')
     }
-    
+
 
   }, [])
-  
+
+  const [admission, setAdmission] = useState('')
+  const [inquiry, setInquiry] = useState('');
+  useEffect(() => {
+
+    axios.get(`http://localhost:8000/get_student`)
+      .then(function (response) {
+        setAdmission(response.data)
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+
+      axios.get(`http://localhost:8000/get_inquiry`)
+      .then(function (response) {
+        setInquiry(response.data)
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+  }, [])
+
 
   return (
     <div>
@@ -29,12 +55,11 @@ const Dashboard = () => {
             <div className="col-lg-3 col-6">
               <div className="small-box bg-info">
                 <div className="inner">
-                  <h3>150</h3>
-
-                  <p>New Orders</p>
+                  <h3>{inquiry.length}</h3>
+                  <p>Total Inquiry</p>
                 </div>
                 <div className="icon">
-                  <i className="ion ion-bag" />
+                  <Icon icon="material-symbols:question-mark-rounded" />
                 </div>
                 <a href="/" className="small-box-footer">
                   More info <i className="fas fa-arrow-circle-right" />
@@ -45,13 +70,13 @@ const Dashboard = () => {
               <div className="small-box bg-success">
                 <div className="inner">
                   <h3>
-                    53<sup style={{fontSize: '20px'}}>%</sup>
+                    {admission.length}<sup style={{ fontSize: '20px' }}></sup>
                   </h3>
 
-                  <p>Bounce Rate</p>
+                  <p>Total Admissions</p>
                 </div>
                 <div className="icon">
-                  <i className="ion ion-stats-bars" />
+                  <Icon icon="mdi:account-student" />
                 </div>
                 <a href="/" className="small-box-footer">
                   More info <i className="fas fa-arrow-circle-right" />
