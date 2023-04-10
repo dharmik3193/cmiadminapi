@@ -3,6 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { Icon } from '@iconify/react';
 
 const Viewinquiry = () => {
     const cell = {
@@ -26,7 +27,7 @@ const Viewinquiry = () => {
       if (data) {
         return (
           <div>
-            <ContentHeader title="Student Data" />
+            <ContentHeader title="Inquiry Data" />
             <section className="content">
               <div className="container-fluid">
                 <table cellPadding={10} cellSpacing={0} border={2} width={'100%'} style={cell}>
@@ -58,7 +59,7 @@ const Viewinquiry = () => {
                             <td>{item.reference}</td>
                             <td>{item.inquiry}</td>
                             <td>{item.note}</td>
-                            <td><Link to={`/student/${item._id}`}><Button variant="primary"><i className='fas fa-eye nav-icon'/></Button></Link></td>
+                            <td><Link to={`/student/${item._id}`}><Button variant="primary"><Icon icon="material-symbols:edit" /></Button></Link></td>
                           </tr>
                         )
                       })
