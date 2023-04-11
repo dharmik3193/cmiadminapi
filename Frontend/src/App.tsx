@@ -14,7 +14,6 @@ import Dashboard from '@pages/Dashboard';
 import Blank from '@pages/Blank';
 import SubMenu from '@pages/SubMenu';
 import Profile from '@pages/profile/Profile';
-import UsePrintForm from './hooks/usePrintForm';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import Addinquiry from './pages/Addinquiry';
@@ -46,7 +45,6 @@ const App = () => {
           <Route path='/student/:id' element={<Singlestudent/>}/>
           <Route path="/blank" element={<Blank />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/print" element={<UsePrintForm />} />
           <Route path='/inquiry'>
             <Route path='add-inquiry' element={<Addinquiry/>} />
             <Route path='view-inquiry' element={<Viewinquiry/>} />
