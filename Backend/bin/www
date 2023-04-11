@@ -9,7 +9,7 @@ var debug = require('debug')('backend:server');
 var http = require('http');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/cmiadmin');
+mongoose.connect('mongodb+srv://dharmikcodesign:Dharmik3193@admincmi.wclthaz.mongodb.net/cmiadmin');
 console.log("DataBase Connected!!!");
 
 /**
